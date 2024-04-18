@@ -1,3 +1,5 @@
 from django.contrib import admin
+from game.models import Product
 
-# Register your models here.
+
+admin.site.register(Product)
