@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+from game.models import Product
 import random
 import datetime
 
@@ -39,3 +40,16 @@ def main_views(request):
     }
     if request.method == 'GET':
         return render(request, "homepage.html", context)
+
+def product_list(request):
+    if request.method == "GET":
+        products = Product.objects.all()
+        print(products)
+        return render(request, "products/goods_list.html",
+                      {"products": products})
+
+def detail_product(request, product_id):
+    if request.method == "GET":
+        detail = Product.objects.get(id=product_id)
+        return render(request, "products/detail.html", {'detail': detail})
+
