@@ -10,12 +10,16 @@
 
     {% for product in products %}
         <div>
-            <img src="{{ product.image.url }}">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" width="250">
+            {% endif %}
             <h2>{{ product.title }} - {{ product.rate }}</h2>
             <p>{{ product.text }}</p>
             <p>Price: ${{ product.price }}</p>
             <p>Created at: {{ product.create_date }}</p>
 
-        <a href="/products/{{ product.id }}"> more </a>
+            <a href="/products/{{ product.id }}"> more </a>
         </div>
     {% endfor %}
+</body>
+</html>

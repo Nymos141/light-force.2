@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Bookstore</title>
 </head>
+{% load static %}
+
+<img src="{% static 'logo.jpeg' %}" alt="main image" width="100">
+
 <body>
     <h1>Ishnu-dal-dieb.</h1>
      <p>Current date: {{ current_date }}</p>
