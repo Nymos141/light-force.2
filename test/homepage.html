@@ -1,0 +1,18 @@
+{% extends 'elements/navbar.html' %}
+
+{% block content %}
+
+<body>
+{% load static %}
+
+<img src="{% static 'logo.jpeg' %}" alt="Главное изображение" width="100">
+
+
+    <h1>Ishnu-dal-dieb.</h1>
+     <p>Текущая дата: {{ current_date }}</p>
+    <p>Текущее время: {{ current_time }}</p>
+    <p>Случайная шутка: {{ random_joke }}</p>
+
+</body>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'elements/navbar.html' %}
+
+{% block content %}
+
+<body>
+  {% load static %}
+
+  <div class="card">
+    <h1>{{ detail.title }}</h1>
+    <div class="card-header"></div>
+    <div class="card-body">
+      <img src="{{ detail.image.url }}">
+      <h5 class="card-title">{{ detail.title }}</h5>
+      <p class="card-text">{{ detail.text }}</p>
+      <p>Price: ${{ detail.price }}</p>
+      <p>Created at: {{ detail.create_date }}</p>
+    </div>
+    <h2>Tags</h2>
+    {% for tag in detail.tags.all %}
+    <p>{{ tag.title }}</p>
+    {% endfor %}
+  </div>
+
+  <a href="products/" class="btn btn-primary btn-sm">Go back</a>
+
+  <h2>Add Feedback</h2>
+  <form action="{% url 'add_feedback' detail.id %}" method="post">
+    {% csrf_token %}
+    <textarea name="text" rows="4" cols="50" placeholder="Enter your feedback"></textarea><br>
+    <button type="submit" class="btn btn-primary"></button>Отправить
+  </form>
+
+  <h2>Feedback</h2>
+  {% for feedback in detail.feedback_set.all %}
+  <p>{{ feedback.text }}</p>
+  {% endfor %}
+</body>
+
+{% endblock %}

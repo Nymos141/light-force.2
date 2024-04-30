@@ -1,0 +1,26 @@
+{% extends 'elements/navbar.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Products:</h1>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+    {% for product in products %}
+    <div class="card" style="width: 18rem; margin-bottom: 20px;">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" class="card-img-top">
+        {% else %}
+        <img src="{% static 'tom.jpeg'%}" class="card-img-top">
+        {%endif%}
+        <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <p>Price: ${{ product.price }}</p>
+            <p class="card-text">{{ product.text }}</p>
+            <p>Created at: {{ product.create_date }}</p>
+            <a href="/products/{{ product.id }}" class="btn btn-primary">More</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

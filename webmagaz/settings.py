@@ -36,7 +36,7 @@ ROOT_URLCONF = 'webmagaz.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "httptemplates"],
+        'DIRS': [BASE_DIR / "test"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

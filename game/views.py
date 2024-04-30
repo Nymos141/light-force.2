@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponse
-from game.models import Product
+from game.models import Product, MyModelManager, Feedback
+from django.shortcuts import render, redirect
 import random
 import datetime
+
 
 def hello_views(request):
     if request.method == "GET":
@@ -45,11 +47,28 @@ def product_list(request):
     if request.method == "GET":
         products = Product.objects.all()
         print(products)
-        return render(request, "products/goods_list.html",
+        return render(request, "products/products_list.html",
                       {"products": products})
 
 def detail_product(request, product_id):
     if request.method == "GET":
         detail = Product.objects.get(id=product_id)
         return render(request, "products/detail.html", {'detail': detail})
+    elif request.method == "POST":
+        text = request.POST.get('text')
+        product = Product.objects.get(id=product_id)
+        feedback = Feedback.objects.create(product=product, text=text)
+        return redirect('detail_product', product_id=product_id)
 
+def add_feedback(request, product_id):
+    if request.method == 'POST':
+        text = request.POST.get('text')
+        return redirect('detail_product', product_id=product_id)
+    else:
+        return HttpResponse("erorr")
+def create(request):
+    if request.method == "GET":
+        return render(request, "products/create_product.html")
+    elif request.method == "POST":
+        var = Product.objects.create_product(title="title", text="text", image="image", price="price")
+        return HttpResponse("Product created")
