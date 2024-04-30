@@ -7,28 +7,38 @@
 </head>
 <body>
 {% block content %}
-<h1 class="mt-5" style="text-align: center;">Заполните поля</h1>
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div>
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" placeholder="Enter title">
+<div style="display: flex;">
+    <div style="width: 50%;">
+        <img src="{{ detail.image.url }}" style="max-width: 100%; height: auto;">
     </div>
-    <div>
-        <label for="text">Text:</label>
-        <textarea id="text" name="text" rows="5" placeholder="Enter text"></textarea>
+    <div style="width: 50%;">
+        <h1>{{ detail.title }}</h1>
+        <p>{{ detail.text }}</p>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Enter title">
+            </div>
+            <div>
+                <label for="text">Text:</label>
+                <textarea id="text" name="text" rows="5" placeholder="Enter text"></textarea>
+            </div>
+            <div>
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" placeholder="Send Image">
+            </div>
+            <div>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" placeholder="Price">
+            </div>
+            <button type="submit">Сохранить</button>
+        </form>
     </div>
-    <div>
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image" placeholder="Send Image">
-    </div>
-    <div>
-    <label for="price">Price:</label>
-    <input type="number" id="price" name="price" placeholder="Price">
-    </div>
-    <button type="submit">Сохранить</button>
-</form>
+</div>
+<div style="text-align: center;">
+    <h2>Комментарии</h2>
+</div>
+{% endblock %}
 </body>
 </html>
-
-{% endblock %}

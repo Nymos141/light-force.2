@@ -1,6 +1,8 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from game.models import Product, MyModelManager, Feedback
 from django.shortcuts import render, redirect
+from django.db import models
+from game.forms import FeedbackForm
 import random
 import datetime
 
@@ -50,25 +52,38 @@ def product_list(request):
         return render(request, "products/products_list.html",
                       {"products": products})
 
+
 def detail_product(request, product_id):
-    if request.method == "GET":
-        detail = Product.objects.get(id=product_id)
-        return render(request, "products/detail.html", {'detail': detail})
-    elif request.method == "POST":
-        text = request.POST.get('text')
-        product = Product.objects.get(id=product_id)
-        feedback = Feedback.objects.create(product=product, text=text)
-        return redirect('detail_product', product_id=product_id)
+    product = get_object_or_404(Product, pk=product_id)
+    feedbacks = Feedback.objects.filter(product_id=product_id)
+
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.instance.product = product
+            form.save()
+            return redirect('detail_product', product_id=product_id)
+    else:
+        form = FeedbackForm()
+
+    context = {'detail': product, 'feedbacks': feedbacks, 'form': form}
+    return render(request, "products/detail.html", context)
 
 def add_feedback(request, product_id):
-    if request.method == 'POST':
+    if request.method == "POST":
         text = request.POST.get('text')
+        product = get_object_or_404(Product, pk=product_id)
+        feedback = Feedback.objects.create(product=product, text=text)
         return redirect('detail_product', product_id=product_id)
     else:
-        return HttpResponse("erorr")
-def create(request):
-    if request.method == "GET":
+        return redirect('detail_product', product_id=product_id)
+def create_product(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        text = request.POST.get('text')
+        image = request.FILES.get('image')
+        price = request.POST.get('price')
+        product = Product.objects.create(title=title, text=text, image=image, price=price)
+        return HttpResponse("Продукт успешно создан")
+    else:
         return render(request, "products/create_product.html")
-    elif request.method == "POST":
-        var = Product.objects.create_product(title="title", text="text", image="image", price="price")
-        return HttpResponse("Product created")

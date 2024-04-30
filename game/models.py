@@ -1,3 +1,5 @@
+from datetime import timezone
+
 from django.db import models
 from django.core.validators import MaxLengthValidator
 
@@ -37,9 +39,9 @@ class Product(models.Model):
 
 
 class Feedback(models.Model):
-    text = models.TextField(validators=[MaxLengthValidator(700)])
+    text = models.TextField(verbose_name="Комментарий")
     product = models.ForeignKey(Product, on_delete=models.CASCADE,  related_name="Feedbacks")
-    objects = models.Model
+    object = models.Model
 
     def __str__(self):
         return self.text
