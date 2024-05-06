@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Append</title>
+    <title>Edit</title>
     <link rel="stylesheet" href="path/to/bootstrap.css">
 </head>
 <body>
     {% extends 'elements/navbar.html' %}
     {% block content %}
-        <h1 class="mt-5" style="text-align: center;">Добавление продукта</h1>
+        <h1 class="mt-5" style="text-align: center;">Редактирование продукта</h1>
         <div class="container">
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Добавить продукт на сайт">
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Добавить изменение">
             </form>
         </div>
     {% endblock %}

@@ -1,20 +1,11 @@
-from datetime import timezone
-
 from django.db import models
-from django.core.validators import MaxLengthValidator
+
 
 class Tag(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=50)
 
     def __str__(self):
         return f"{self.title}"
-
-class MyModelManager(models.Manager):
-    def create_product(self, **kwargs):
-        product = self.model(**kwargs)
-        product.save(using=self._db)
-        return product
-
 
 class Product(models.Model):
     title = models.CharField(max_length=100)
@@ -25,7 +16,7 @@ class Product(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, blank=True)
 
-    objects = MyModelManager()
+    objects = models.Manager()
 
     # create = models.
 
